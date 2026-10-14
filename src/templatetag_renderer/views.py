@@ -2,9 +2,10 @@ import importlib
 
 from django.http import Http404, HttpResponse
 from django.template import RequestContext, Template, TemplateSyntaxError
-from django.template.utils import get_installed_libraries
+from django.template.backends.django import get_installed_libraries
 from django.utils.html import escape
 from django.views.decorators.http import require_GET
+from django.core.cache import cache
 
 
 def _coerce(value: str):
@@ -29,6 +30,13 @@ def _find_library_with_tag(tag_name: str, lib_name: str | None = None) -> str | 
     Ищет шаблонную библиотеку (то, что пишут в {% load %}) по имени тега.
     Обходит все INSTALLED_APPS через штатное API Django.
     """
+    cache_key = 'tag_name_lib_name_map'
+
+    cached_map = cache.get(cache_key) or {}
+
+    if tag_name in cached_map:
+        return cached_map[tag_name]
+
     libraries = get_installed_libraries()  # {short_name: 'app.templatetags.module'}
     for name, module_path in libraries.items():
         if lib_name and name != lib_name:
@@ -39,6 +47,8 @@ def _find_library_with_tag(tag_name: str, lib_name: str | None = None) -> str | 
             continue
         register = getattr(module, "register", None)
         if register and tag_name in register.tags:
+            cached_map[tag_name] = name
+            cache.set(cache_key, cached_map)
             return name
     return None
 
@@ -65,7 +75,7 @@ def render_tag(request, tag_name: str, lib_name: str | None = None):
     arg_tokens: list[str] = []
 
     for i, raw in enumerate(positional):
-        var = f"_p{i}"
+        var = f"t_arg{i}"
         context[var] = _coerce(raw)
         arg_tokens.append(var)
 
