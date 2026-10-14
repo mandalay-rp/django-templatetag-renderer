@@ -1,4 +1,4 @@
-from django.template.utils import get_installed_libraries
+from django.template.backends.django import get_installed_libraries
 from django.test import SimpleTestCase
 
 from templatetag_renderer.views import _coerce, _find_library_with_tag

@@ -70,7 +70,7 @@ curl 'http://localhost:8000/render/shop_tags/greeting/?args=Alice'
 ```
 ## Как это работает
 ```text
-1. django.template.utils.get_installed_libraries() обходит всеINSTALLED_APPS, находит подпакеты templatetags/ и возвращает словарь {short_name: dotted_path}.
+1. django.template.backends.django.get_installed_libraries() обходит всеINSTALLED_APPS, находит подпакеты templatetags/ и возвращает словарь {short_name: dotted_path}.
 2. View импортирует найденный модуль и проверяет наличие тега в register.tags.
 3. Собирает шаблон на лету: {% load shop_tags %}{% counter _p0 _p1 _p2 %}
 Значения из URL кладутся в контекст под служебными именами _p0,

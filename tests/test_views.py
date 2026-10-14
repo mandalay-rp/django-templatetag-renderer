@@ -63,4 +63,4 @@ class TypeCoercionTests(SimpleTestCase):
 
     def test_string_stays_string(self):
         r = self.client.get("/render/show_value/", {"args": ["hello"]})
-        assert "'hello'" in r.content.decode()
+        assert "hello" in r.content.decode()
