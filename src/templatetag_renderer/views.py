@@ -75,12 +75,12 @@ def render_tag(request, tag_name: str, lib_name: str | None = None):
     arg_tokens: list[str] = []
 
     for i, raw in enumerate(positional):
-        var = f"t_arg{i}"
+        var = f"t_args{i}"
         context[var] = _coerce(raw)
         arg_tokens.append(var)
 
     for k, raw in kwargs.items():
-        var = f"_k_{k}"
+        var = f"t_kwargs_{k}"
         context[var] = _coerce(raw)
         arg_tokens.append(f"{k}={var}")
 
@@ -94,7 +94,7 @@ def render_tag(request, tag_name: str, lib_name: str | None = None):
         output = tpl.render(RequestContext(request, context))
     except TemplateSyntaxError as exc:
         raise Http404(f"Синтаксис тега неверен: {exc}") from exc
-    except Exception as exc:  # noqa: BLE001
+    except Exception as exc:
         return HttpResponse(
             f'<div class="error">{escape(str(exc))}</div>',
             status=500,
