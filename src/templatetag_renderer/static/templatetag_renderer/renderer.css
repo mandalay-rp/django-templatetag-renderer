@@ -1,0 +1,17 @@
+.renderer-slot--loading {
+  opacity: 0.5;
+  position: relative;
+  min-height: 1em;
+}
+.renderer-slot--loading::after {
+  content: "…";
+  margin-left: 0.3em;
+}
+.renderer-slot--error {
+  color: #b00020;
+  border: 1px dashed #b00020;
+  padding: 0.25em 0.5em;
+}
+.renderer-slot__error {
+  font-size: 0.9em;
+}
