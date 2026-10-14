@@ -21,22 +21,20 @@ uv add django-templatetag-renderer
 ### Добавьте приложение в INSTALLED_APPS:
     
 ```python
-
-    INSTALLED_APPS = [
-        # ...
-        "django.contrib.staticfiles",
-        "templatetag_renderer",
-    ]
+INSTALLED_APPS = [
+    # ...
+    "django.contrib.staticfiles",
+    "templatetag_renderer",
+]
 ```
 ### Подключите URL-ы:
 ```python
+# urls.py
+from django.urls import include, path
 
-    # urls.py
-    from django.urls import include, path
-
-    urlpatterns = [
-        path("render/", include("templatetag_renderer.urls")),
-    ]
+urlpatterns = [
+    path("render/", include("templatetag_renderer.urls")),
+]
 ```
 ### Используйте в шаблоне:
 ```django

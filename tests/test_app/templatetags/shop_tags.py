@@ -21,7 +21,9 @@ def price(amount, currency="RUB", locale="ru"):
     formatted = f"{amount:,}".replace(",", " ")
     return format_html(
         '<span class="price price--{}">{} {}</span>',
-        locale, formatted, currency,
+        locale,
+        formatted,
+        currency,
     )
 
 
