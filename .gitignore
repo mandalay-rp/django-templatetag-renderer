@@ -28,6 +28,7 @@ htmlcov/
 .nox/
 
 # uv
+uv.lock
 uv.lock.bak
 
 # Django
