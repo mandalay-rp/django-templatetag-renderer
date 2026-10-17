@@ -6,12 +6,11 @@
 
 ## [Unreleased]
 
-## [0.1.0] — 2025-01-01
+## [0.1.0] — 2026-10-17
 
 ### Added
 - Первый релиз.
-- Агностичный view `render_tag`, рендерящий любой templatetag проекта
-  через штатное API Django `get_installed_libraries()`.
+- Динамический рендерер для получения html-кода, возвращаемого шаблонными тегами Django (templatetags). 
 - Автоматическое приведение типов query-параметров (`int`/`float`/`bool`/`None`).
 - Поддержка `takes_context=True` (теги получают настоящий `RequestContext`).
 - Шаблонный тег `{% render_slot %}` для генерации HTML-слотов с `data-tag-url`.
