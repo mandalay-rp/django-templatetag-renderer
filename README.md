@@ -1,9 +1,9 @@
 # django-templatetag-renderer
 
-![ci image](https://github.com/mandalay-rp/django-templatetag-renderer/actions/workflows/ci.yml/badge.svg)
-![](https://img.shields.io/pypi/v/django-templatetag-renderer.svg)
-![](https://img.shields.io/pypi/pyversions/django-templatetag-renderer.svg)
-![](https://img.shields.io/badge/django-4.2%20%7C%205.0%20%7C%205.1-blue)
+<!-- ![ci image](https://github.com/mandalay-rp/django-templatetag-renderer/actions/workflows/ci.yml/badge.svg) -->
+<!-- ![](https://img.shields.io/pypi/v/django-templatetag-renderer.svg) -->
+<!-- ![](https://img.shields.io/pypi/pyversions/django-templatetag-renderer.svg) -->
+![](https://img.shields.io/badge/django-3.2%20%7C%204.2%20%7C%205.0%20%7C%205.1-blue)
 ![](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 Динамический рендерер для получения html-кода, возвращаемого шаблонными тегами Django (templatetags). 
@@ -38,13 +38,13 @@ urlpatterns = [
 ```
 ### Используйте в шаблоне:
 ```django
-
     {% load static renderer_tags %}
     <link rel="stylesheet" href="{% static 'templatetag_renderer/renderer.css' %}">
 
-    {% render_slot "greeting" args="World" %}
-    {% render_slot "counter" args=0 args=2 args=5 %}
-    {% render_slot "price" args=999 currency="USD" %}
+    {% render_slot "greeting" "World" %}
+    {% render_slot "counter" 0 2 5 %}
+    {% render_slot "price" 999 currency="USD" %}
+    {% render_slot "greeting" "Alice" lib="shop_tags" element="aside" %}
 
     <script src="{% static 'templatetag_renderer/renderer.js' %}"></script>
 ```

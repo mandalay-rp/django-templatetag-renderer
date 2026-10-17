@@ -30,7 +30,7 @@ def _find_library_with_tag(tag_name: str, lib_name: str | None = None) -> str | 
     Ищет шаблонную библиотеку (то, что пишут в {% load %}) по имени тега.
     Обходит все INSTALLED_APPS через штатное API Django.
     """
-    cache_key = 'tag_name_lib_name_map'
+    cache_key = "tag_name_lib_name_map"
 
     cached_map = cache.get(cache_key) or {}
 
