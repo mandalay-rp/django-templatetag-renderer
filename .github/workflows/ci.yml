@@ -5,45 +5,76 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-    # workflow_dispatch:
+  workflow_dispatch:
+
+    concurrency:
+      group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
 
 jobs:
   lint:
+    name: Lint & types
     runs-on: ubuntu-latest
     steps:
-      uses: actions/checkout@v4
-      uses: astral-sh/setup-uv@v3
-      with:
-        enable-cache: true
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: |
+            pyproject.toml
+            uv.lock
+
+      - name: Install dependencies
         run: uv sync --all-groups
 
+      - name: Ruff check
         run: uv run ruff check .
 
+      - name: Ruff format check
         run: uv run ruff format --check .
 
+      - name: Mypy
+        run: uv run mypy src
+
+      - name: Pyright
+        run: uv run pyright src
+
   test:
+    name: Tests (py${{ matrix.python-version }}, django${{ matrix.django-version }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-    matrix:
-      python-version: ["3.10", "3.11", "3.12", "3.13"]
-      django-version: ["3.2", "4.2", "5.0", "5.1"]
-    python-version: "3.12"
-    django-version: "4.2"
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        django-version: ["4.2", "5.0", "5.1"]
+        exclude:
+          - python-version: "3.13"
+            django-version: "4.2"
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      uses: actions/checkout@v4
+      - name: Setup uv with Python ${{ matrix.python-version }}
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
 
-      uses: astral-sh/setup-uv@v3
-      with:
-        enable-cache: true
-      python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: uv sync --all-groups
 
-      name: Install deps
-      run: uv sync --all-groups
+      - name: Pin Django ${{ matrix.django-version }}
+        run: uv pip install "django~=${{ matrix.django-version }}.0"
 
-      name: Pin Django matrix.django−versionrun:uvpipinstall"django =matrix.django−versionrun:uvpipinstall"django ={{ matrix.django-version }}.0"
+      - name: Show installed versions
+        run: |
+          uv run python -c "import django, sys; print('python', sys.version.split()[0]); print('django', django.get_version())"
 
-      name: Run tests
-      run: uv run pytest -q
+      - name: Pytest
+        run: uv run pytest -q --maxfail=1
