@@ -1,11 +1,11 @@
 import importlib
 
+from django.core.cache import cache
 from django.http import Http404, HttpResponse
 from django.template import RequestContext, Template, TemplateSyntaxError
 from django.template.backends.django import get_installed_libraries
 from django.utils.html import escape
 from django.views.decorators.http import require_GET
-from django.core.cache import cache
 
 
 def _coerce(value: str):
