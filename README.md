@@ -1,8 +1,8 @@
 # django-templatetag-renderer
 
 <!-- ![ci image](https://github.com/mandalay-rp/django-templatetag-renderer/actions/workflows/ci.yml/badge.svg) -->
-<!-- ![](https://img.shields.io/pypi/v/django-templatetag-renderer.svg) -->
-<!-- ![](https://img.shields.io/pypi/pyversions/django-templatetag-renderer.svg) -->
+![](https://img.shields.io/pypi/v/django-templatetag-renderer.svg)
+![](https://img.shields.io/pypi/pyversions/django-templatetag-renderer.svg)
 ![](https://img.shields.io/badge/django-3.2%20%7C%204.2%20%7C%205.0%20%7C%205.1-blue)
 ![](https://img.shields.io/badge/License-MIT-yellow.svg)
 
