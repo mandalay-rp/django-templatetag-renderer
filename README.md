@@ -5,6 +5,7 @@
 ![](https://img.shields.io/pypi/pyversions/django-templatetag-renderer.svg)
 ![](https://img.shields.io/badge/django-3.2%20%7C%204.2%20%7C%205.0%20%7C%205.1-blue)
 ![](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Downloads](https://img.shields.io/pypi/dm/django-templatetag-renderer?label=Downloads)
 
 Динамический рендерер для получения html-кода, возвращаемого шаблонными тегами Django (templatetags). 
 Позволяет отрендерить любой simple_tag из любого приложения проекта по HTTP-запросу — без импорта этих тегов и без знания об их существовании на этапе разработки.
